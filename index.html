@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>PokéGuía Team Rocket Edition</title>
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2e7d32">
+<link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
+<style>
+:root{--bg:#f3f7f2;--fg:#17261a;--card:#fff;--bd:#c9d8c8;--g:#2e7d32;--gl:#dff0de;--mu:#5b6e5d;--red:#c62828;box-sizing:border-box}
+@media(prefers-color-scheme:dark){:root{--bg:#0f1710;--fg:#e4efe4;--card:#18231a;--bd:#2f4531;--g:#66bb6a;--gl:#1f3a22;--mu:#9bb09d}}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+body{display:flex;flex-direction:column;background:var(--bg);color:var(--fg);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding-top:env(safe-area-inset-top,0px)}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--g);outline-offset:2px}
+header{display:flex;align-items:center;gap:10px;padding:8px 10px;border-bottom:1px solid var(--bd);background:var(--card)}
+header.r{flex-direction:row-reverse}
+header h1{font-size:1.05rem;margin:0;line-height:1.15}header small{display:block;color:var(--mu);font-size:.72rem;font-weight:400}
+#mb{width:44px;height:44px;flex:none;border:2px solid var(--g);border-radius:10px;background:var(--card);display:grid;place-content:center;gap:5px}
+#mb i{display:block;width:22px;height:3px;background:var(--g);border-radius:2px}
+#menu{position:fixed;z-index:20;top:calc(env(safe-area-inset-top,0px) + 62px);left:8px;width:min(300px,calc(100% - 16px));max-height:calc(100% - 140px);overflow:auto;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:8px;box-shadow:0 6px 24px #0004}
+#menu.r{left:auto;right:8px}#menu[hidden]{display:none}
+.mi{display:block;width:100%;min-height:44px;text-align:left;background:none;border:0;border-radius:8px;padding:8px 12px}
+.mi:hover{background:var(--gl)}.mi.sub{padding-left:28px}
+.mh{padding:10px 12px 2px;font-weight:700;color:var(--mu);font-size:.8rem;letter-spacing:.06em}
+.sw{display:flex;align-items:center;gap:10px;min-height:44px;padding:4px 12px}.sw input{width:22px;height:22px;accent-color:var(--g)}
+.mt{border-top:1px solid var(--bd);margin:6px 0 0;padding-top:6px}
+main{flex:1;overflow:auto;padding:12px;-webkit-overflow-scrolling:touch}
+#bar{display:flex;gap:6px;overflow-x:auto;padding:6px 8px calc(6px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--bd);background:var(--card);touch-action:pan-x;scrollbar-width:none;min-height:46px}
+.tab{display:flex;flex:none;height:34px;border:1.5px solid var(--bd);border-radius:9px;overflow:hidden;background:var(--bg);user-select:none;-webkit-user-select:none}
+.tab.on{border-color:var(--g);background:var(--gl)}
+.tab.drag{opacity:.75;box-shadow:0 3px 10px #0006;transform:scale(1.04)}
+.tl{border:0;background:none;padding:0 10px;white-space:nowrap;font-size:.85rem}
+.tx{border:0;background:var(--red);color:#fff;width:30px;font-size:1.05rem;line-height:1}
+.chip{display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:0 12px;border:2px solid transparent;border-radius:22px;background:var(--c);color:var(--k);font-weight:600;font-size:.9rem}
+.chip.s{min-height:28px;padding:0 9px;font-size:.78rem;pointer-events:none}
+.chip.on{border-color:var(--fg);box-shadow:0 0 0 2px var(--bg),0 0 0 4px var(--fg)}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0 16px}
+.grid3 .chip{justify-content:center;padding:0 4px}
+.blk{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:10px;margin:0 0 10px}
+.blk h3{margin:0 0 8px;font-size:.95rem}.blk div{display:flex;flex-wrap:wrap;gap:6px}
+.ey{color:var(--mu);margin:2px 0 10px}
+.wel{text-align:center;padding:40px 12px}.wel h2{margin:0 0 8px}
+#msg{position:sticky;top:0;left:0;z-index:3;background:var(--g);color:#fff;border-radius:10px;padding:8px 12px;margin-bottom:8px;min-height:40px}
+.tw{overflow:auto;max-height:calc(100% - 52px);border:1px solid var(--bd);border-radius:10px}
+table{border-collapse:separate;border-spacing:0;font-size:.74rem;text-align:center}
+th,td{min-width:38px;height:38px;border-right:1px solid var(--bd);border-bottom:1px solid var(--bd);padding:0;background:var(--card)}
+th{position:sticky;top:0;z-index:2;color:var(--k);background:var(--c);font-size:.68rem}
+th.rw{left:0;z-index:2;top:auto}thead th.rw,th.cn{z-index:4;top:0;left:0;background:var(--gl);color:var(--fg);min-width:58px}
+td{cursor:pointer;font-weight:700}.m2{background:#43a047;color:#fff}.mh2{background:#e57373;color:#fff}.m0{background:#37474f;color:#fff}
+.ph{background:var(--card);border:1px dashed var(--bd);border-radius:12px;padding:16px}
+</style></head><body>
+<header id="hd"><button id="mb" aria-label="Menú" aria-expanded="false"><i></i><i></i><i></i></button>
+<h1>PokéGuía Team Rocket Edition<small>Pokédex, ataques y tipos · Gen 9 (hack de GBA, v3.0.7)</small></h1></header>
+<div id="menu" hidden></div><main id="v"></main><nav id="bar" aria-label="Pestañas abiertas"></nav>
+<script>
+const T=[["Nor","Normal","#a8a77a","⚪"],["Fue","Fuego","#ee8130","🔥"],["Agu","Agua","#6390f0","💧"],["Ele","Eléctrico","#f7d02c","⚡"],["Pla","Planta","#7ac74c","🌿"],["Hie","Hielo","#96d9d6","❄"],["Luc","Lucha","#c22e28","🥊"],["Ven","Veneno","#a33ea1","☠"],["Tie","Tierra","#e2bf65","⛰"],["Vol","Volador","#a98ff3","🕊"],["Psí","Psíquico","#f95587","🔮"],["Bic","Bicho","#a6b91a","🐛"],["Roc","Roca","#b6a136","🪨"],["Fan","Fantasma","#735797","👻"],["Dra","Dragón","#6f35fc","🐉"],["Sin","Siniestro","#705746","🌑"],["Ace","Acero","#b7b7ce","⚙"],["Had","Hada","#d685ad","✨"]];
+const A=T.map(t=>t[0]),NM=Object.fromEntries(T.map(t=>[t[0],t[1]])),CO=Object.fromEntries(T.map(t=>[t[0],t[2]])),GL=Object.fromEntries(T.map(t=>[t[0],t[3]]));
+// Tabla de 18 tipos (gen 6+; el hack sigue la gen 9). d=×2, h=×½, z=×0
+const X={Nor:{h:"Roc Ace",z:"Fan"},Fue:{d:"Pla Hie Bic Ace",h:"Fue Agu Roc Dra"},Agu:{d:"Fue Tie Roc",h:"Agu Pla Dra"},Ele:{d:"Agu Vol",h:"Ele Pla Dra",z:"Tie"},Pla:{d:"Agu Tie Roc",h:"Fue Pla Ven Vol Bic Dra Ace"},Hie:{d:"Pla Tie Vol Dra",h:"Fue Agu Hie Ace"},Luc:{d:"Nor Hie Roc Sin Ace",h:"Ven Vol Psí Bic Had",z:"Fan"},Ven:{d:"Pla Had",h:"Ven Tie Roc Fan",z:"Ace"},Tie:{d:"Fue Ele Ven Roc Ace",h:"Pla Bic",z:"Vol"},Vol:{d:"Pla Luc Bic",h:"Ele Roc Ace"},"Psí":{d:"Luc Ven",h:"Psí Ace",z:"Sin"},Bic:{d:"Pla Psí Sin",h:"Fue Luc Ven Vol Fan Ace Had"},Roc:{d:"Fue Hie Vol Bic",h:"Luc Tie Ace"},Fan:{d:"Psí Fan",h:"Sin",z:"Nor"},Dra:{d:"Dra",h:"Ace",z:"Had"},Sin:{d:"Psí Fan",h:"Luc Sin Had"},Ace:{d:"Hie Roc Had",h:"Fue Agu Ele Ace"},Had:{d:"Luc Dra Sin",h:"Fue Ven Ace"}};
+const M={};A.forEach(a=>{M[a]={};A.forEach(d=>{const e=X[a],h=s=>(e[s]||"").split(" ").includes(d);M[a][d]=h("z")?0:h("d")?2:h("h")?.5:1})});
+const ink=h=>{const n=parseInt(h.slice(1),16),l=.299*(n>>16)+.587*((n>>8)&255)+.114*(n&255);return l>150?"#111":"#fff"};
+const chip=(t,x="",c="")=>`<button class="chip ${x}" data-t="${t}" style="--c:${CO[t]};--k:${ink(CO[t])}" ${c}>${GL[t]} ${NM[t]}</button>`;
+const ls={g(k,d){try{const v=localStorage.getItem(k);return v===null?d:JSON.parse(v)}catch(e){return d}},s(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}};
+const SEC={pokedex:"Pokédex",mov:"Movimientos",jefes:"Jefes","t-ata":"Tipos · Ataque","t-def":"Tipos · Defensa","t-tab":"Tipos · Tabla"};
+let tabs=[],act=null,selA=null,selD=[],msg="";
+const cfg={mt:ls.g("mt",false),tutor:ls.g("tutor",false),huevo:ls.g("huevo",false),right:ls.g("right",false)};
+const $=s=>document.querySelector(s),V=$("#v"),BAR=$("#bar"),MENU=$("#menu");
+function open(id){if(!tabs.includes(id))tabs.push(id);act=id;render()}
+function close(id){const i=tabs.indexOf(id);tabs.splice(i,1);if(act===id)act=tabs[Math.min(i,tabs.length-1)]||null;render()}
+function openDef(ts){selD=ts.slice(0,2);open("t-def")}
+function side(){$("#hd").classList.toggle("r",cfg.right);MENU.classList.toggle("r",cfg.right)}
+function buildMenu(){const it=(id,c="")=>`<button class="mi ${c}" data-o="${id}">${SEC[id].replace("Tipos · ","")}</button>`;
+ const sw=(k,l)=>`<label class="sw"><input type="checkbox" data-c="${k}" ${cfg[k]?"checked":""}>${l}</label>`;
+ MENU.innerHTML=it("pokedex")+it("mov")+it("jefes")+`<div class="mh">TIPOS</div>`+it("t-ata","sub")+it("t-def","sub")+it("t-tab","sub")+
+ `<div class="mt"><div class="mh">Ataques en la Pokédex</div>${sw("mt","Mostrar MT/MO")}${sw("tutor","Mostrar Tutor")}${sw("huevo","Mostrar Huevo")}${sw("right","Botón del menú a la derecha")}</div>`}
+MENU.addEventListener("click",e=>{const b=e.target.closest("[data-o]");if(b){MENU.hidden=true;$("#mb").setAttribute("aria-expanded","false");open(b.dataset.o)}});
+MENU.addEventListener("change",e=>{const k=e.target.dataset.c;if(!k)return;cfg[k]=e.target.checked;ls.s(k,cfg[k]);side()});
+$("#mb").onclick=()=>{MENU.hidden=!MENU.hidden;$("#mb").setAttribute("aria-expanded",String(!MENU.hidden))};
+document.addEventListener("click",e=>{if(!MENU.hidden&&!e.target.closest("#menu,#mb")){MENU.hidden=true}});
+function renderBar(){BAR.innerHTML=tabs.map(id=>`<div class="tab ${id===act?"on":""}" data-id="${id}"><button class="tl">${SEC[id]}</button><button class="tx" aria-label="Cerrar ${SEC[id]}">×</button></div>`).join("");
+ const a=BAR.querySelector(".on");if(a)BAR.scrollLeft=a.offsetLeft-(BAR.clientWidth-a.offsetWidth)/2}
+let drag=null,timer=null,sx=0,jd=false;
+BAR.addEventListener("click",e=>{if(jd)return;const t=e.target.closest(".tab");if(!t)return;e.target.closest(".tx")?close(t.dataset.id):(act=t.dataset.id,render())});
+BAR.addEventListener("pointerdown",e=>{const t=e.target.closest(".tab");if(!t||e.target.closest(".tx"))return;sx=e.clientX;const go=()=>{drag=t;t.classList.add("drag");navigator.vibrate&&navigator.vibrate(15)};
+ if(e.pointerType==="mouse"){drag=null;BAR._pend=go}else{timer=setTimeout(go,400)}});
+addEventListener("pointermove",e=>{if(timer&&Math.abs(e.clientX-sx)>10&&!drag){clearTimeout(timer);timer=null}
+ if(BAR._pend&&Math.abs(e.clientX-sx)>6){BAR._pend();BAR._pend=null}
+ if(!drag)return;const r=BAR.getBoundingClientRect();if(e.clientX<r.left+36)BAR.scrollLeft-=10;else if(e.clientX>r.right-36)BAR.scrollLeft+=10;
+ for(const o of BAR.children){if(o===drag)continue;const b=o.getBoundingClientRect();if(e.clientX>b.left&&e.clientX<b.right){const before=[...BAR.children].indexOf(drag)>[...BAR.children].indexOf(o);before?BAR.insertBefore(drag,o):o.after(drag);break}}});
+document.addEventListener("touchmove",e=>{if(drag)e.preventDefault()},{passive:false});
+function endDrag(){clearTimeout(timer);timer=null;BAR._pend=null;if(drag){tabs=[...BAR.children].map(x=>x.dataset.id);drag=null;jd=true;setTimeout(()=>jd=false,60);renderBar()}}
+addEventListener("pointerup",endDrag);addEventListener("pointercancel",endDrag);
+const mk=(h,l)=>`<div class="blk"><h3>${h}</h3><div>${l.length?l.map(t=>chip(t,"s")).join(""):'<span class="ey">Ninguno</span>'}</div></div>`;
+function vAta(){const e=selA;let h=`<p class="ey">Elige el tipo del ataque.</p><div class="grid3">${A.map(t=>chip(t,t===e?"on":"")).join("")}</div>`;
+ if(e)h+=mk("Muy eficaz contra (×2)",A.filter(d=>M[e][d]===2))+mk("Poco eficaz contra (×½)",A.filter(d=>M[e][d]===.5))+mk("No afecta a (×0)",A.filter(d=>M[e][d]===0));return h}
+function vDef(){let h=`<p class="ey">Elige 1 o 2 tipos del Pokémon (un tercero reemplaza al primero).</p><div class="grid3">${A.map(t=>chip(t,selD.includes(t)?"on":"")).join("")}</div>`;
+ if(selD.length){const m=a=>selD.reduce((p,d)=>p*M[a][d],1),g=v=>A.filter(a=>m(a)===v);h+=(selD.length>1?mk("Muy débil a (×4)",g(4)):"")+mk("Débil a (×2)",g(2))+mk("Resiste (×½)",g(.5))+(selD.length>1?mk("Resiste mucho (×¼)",g(.25)):"")+mk("Inmune a (×0)",g(0))}return h}
+function vTab(){let h=`<div id="msg">${msg||"Toca una casilla para ver el detalle."}</div><div class="tw"><table><thead><tr><th class="cn">Def →<br>Atq ↓</th>${A.map(d=>`<th style="--c:${CO[d]};--k:${ink(CO[d])}">${d}</th>`).join("")}</tr></thead><tbody>`;
+ A.forEach(a=>{h+=`<tr><th class="rw" style="--c:${CO[a]};--k:${ink(CO[a])}">${a}</th>`+A.map(d=>{const v=M[a][d];return `<td data-a="${a}" data-d="${d}" class="${v===2?"m2":v===.5?"mh2":v===0?"m0":""}">${v===2?"2":v===.5?"½":v===0?"0":""}</td>`}).join("")+"</tr>"});return h+"</tbody></table></div>"}
+function ph(n){return `<div class="ph"><h2>${n}</h2><p>Esta sección llega en la siguiente fase. Los datos del hack (v3.0.7) ya están extraídos del zip.</p></div>`}
+function render(){renderBar();if(!act){V.innerHTML=`<div class="wel"><h2>Bienvenido</h2><p class="ey">Abre una sección desde el botón de menú.</p></div>`;return}
+ V.innerHTML=act==="t-ata"?vAta():act==="t-def"?vDef():act==="t-tab"?vTab():ph(SEC[act])}
+V.addEventListener("click",e=>{const c=e.target.closest(".chip");
+ if(c&&act==="t-ata"){selA=selA===c.dataset.t?null:c.dataset.t;render()}
+ else if(c&&act==="t-def"){const t=c.dataset.t,i=selD.indexOf(t);if(i>=0)selD.splice(i,1);else{selD.push(t);if(selD.length>2)selD.shift()}render()}
+ const td=e.target.closest("td");if(td){const v=M[td.dataset.a][td.dataset.d],f=v===2?"muy eficaz (×2)":v===.5?"poco eficaz (×½)":v===0?"no afecta (×0)":"daño normal (×1)";msg=`${NM[td.dataset.a]} contra ${NM[td.dataset.d]}: ${f}`;$("#msg").textContent=msg}});
+buildMenu();side();render();
+if(/^https?:$/.test(location.protocol)&&"serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
+</script></body></html>
