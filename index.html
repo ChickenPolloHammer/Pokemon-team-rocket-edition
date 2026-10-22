@@ -153,7 +153,7 @@ document.addEventListener("touchmove",e=>{if(drag)e.preventDefault()},{passive:f
 function endDrag(){clearTimeout(timer);timer=null;BAR._pend=null;if(drag){tabs=[...BAR.children].map(x=>x.dataset.id);drag=null;jd=true;setTimeout(()=>jd=false,60);renderBar()}}
 addEventListener("pointerup",endDrag);addEventListener("pointercancel",endDrag);
 const KM={"Muy eficaz":"se","Poco eficaz":"ne","No afecta":"im","Muy débil":"w4","Débil":"w2","Resiste mucho":"r4","Resiste":"r2","Inmune":"im"};
-const mk=(h,l)=>`<div class="blk k-${KM[Object.keys(KM).find(x=>h.startsWith(x))]}"><h3>${h}</h3><div>${l.length?l.map(t=>chip(t,"s")).join(""):'<span class="ey">Ninguno</span>'}</div></div>`;
+const mk=(h,l)=>!l.length?"":`<div class="blk k-${KM[Object.keys(KM).find(x=>h.startsWith(x))]}"><h3>${h}</h3><div>${l.length?l.map(t=>chip(t,"s")).join(""):'<span class="ey">Ninguno</span>'}</div></div>`;
 function vAta(){const e=selA;let h=`<p class="ey">Elige el tipo del ataque.</p><div class="grid3">${A.map(t=>chip(t,t===e?"on":"")).join("")}</div>`;
  if(e)h+=mk("Muy eficaz contra (×2)",A.filter(d=>M[e][d]===2))+mk("Poco eficaz contra (×½)",A.filter(d=>M[e][d]===.5))+mk("No afecta a (×0)",A.filter(d=>M[e][d]===0));return h}
 function vDef(){let h=`<p class="ey">Elige 1 o 2 tipos del Pokémon (un tercero reemplaza al primero).</p><div class="grid3">${A.map(t=>chip(t,selD.includes(t)?"on":"")).join("")}</div>`;
