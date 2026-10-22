@@ -2,7 +2,7 @@
 <html lang="es"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>PokéGuía Team Rocket Edition</title>
-<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#2e7d32">
+<link rel="manifest" href="manifest.webmanifest"><meta name="theme-color" content="#0d0d10"><meta name="color-scheme" content="light dark">
 <link rel="icon" href="icon-192.png"><link rel="apple-touch-icon" href="icon-192.png">
 <style>
 :root{--bg:#f3f7f2;--fg:#17261a;--card:#fff;--bd:#c9d8c8;--g:#2e7d32;--gl:#dff0de;--mu:#5b6e5d;--red:#c62828;box-sizing:border-box}
@@ -67,8 +67,33 @@ td{cursor:pointer;font-weight:700}.m2{background:#43a047;color:#fff}.mh2{backgro
 .jt small{display:block;color:var(--mu);font-size:.78rem}.jbody{grid-column:1/4}.jm{display:flex;gap:10px;align-items:flex-start;border-top:1px solid var(--bd);padding:8px 0}.sp2{width:48px;height:48px;object-fit:contain;image-rendering:pixelated;flex:none}
 .jd{font-size:.78rem;color:var(--mu)}.jm .chip.s{min-height:22px;font-size:.66rem;padding:0 6px;margin-left:6px}.jnote{font-size:.8rem;background:var(--gl);border-radius:8px;padding:6px 10px;margin:6px 0}.rowc.w{flex-wrap:wrap}
 .ph{background:var(--card);border:1px dashed var(--bd);border-radius:12px;padding:16px}
+
+/* ===== Estética Team Rocket ===== */
+:root{--bg:#f1f1f4;--card:#fff;--fg:#141418;--bd:#d6d6dd;--g:#c8102e;--gl:#fbe4e8;--mu:#62666f;--on-g:#fff}
+@media(prefers-color-scheme:dark){:root{--bg:#09090c;--card:#15151a;--fg:#ececf1;--bd:#2b2b34;--g:#ff3f52;--gl:#2b1318;--mu:#9d9dab;--on-g:#1a0407}}
+html{background:#0d0d10}body{padding-top:0}
+main{background-image:repeating-linear-gradient(135deg,transparent 0 22px,rgba(200,16,46,.05) 22px 23px)}
+header{padding-top:calc(8px + env(safe-area-inset-top,0px));background:linear-gradient(180deg,#1a1a21,#0d0d10);border-bottom:3px solid var(--g);color:#fff}
+#mb{background:#0d0d10;border-color:var(--g)}#mb i{background:#fff}#mb[aria-expanded=true] i:nth-child(2){background:var(--g)}
+.logo{width:40px;height:40px;flex:none;border-radius:50%;background:var(--g);color:#fff;display:grid;place-content:center;font:italic 900 1.45rem/1 Georgia,"Times New Roman",serif;box-shadow:0 0 0 2px #0d0d10,0 0 0 4px var(--g)}
+.logo.big{width:96px;height:96px;font-size:3.5rem;margin:8px auto 20px;box-shadow:0 0 0 4px #0d0d10,0 0 0 7px var(--g),0 0 28px rgba(200,16,46,.45)}
+header h1{font-size:.95rem;letter-spacing:.08em;text-transform:uppercase;font-weight:800;color:#fff}header small{color:#a9a9b8;letter-spacing:.02em;text-transform:none;font-weight:400}
+#menu{border-top:3px solid var(--g)}.mi:hover,.mi:focus-visible{background:var(--gl)}.mh{color:var(--g);font-weight:800;letter-spacing:.14em}
+#bar{background:#0d0d10;border-top:3px solid var(--g)}
+.tab{background:#1b1b22;border-color:#34343f;color:#ececf1}.tab.on{border-color:var(--g);background:#2b1318}.tl{color:inherit;font-weight:600}.tab.on .tl{color:#fff}.tx{background:#c62828;color:#fff}
+.pk,.mc,.jc,.blk{box-shadow:inset 4px 0 0 var(--g)}
+.sh{color:var(--g);text-transform:uppercase;letter-spacing:.1em;font-weight:800;font-size:.9rem;border-bottom:1px solid var(--bd);padding-bottom:4px}
+.wel h2{text-transform:uppercase;letter-spacing:.12em;font-weight:800;margin:0 0 10px}
+.stamp{display:inline-block;border:2px solid var(--g);color:var(--g);padding:2px 12px;transform:rotate(-3deg);font-weight:800;letter-spacing:.14em;text-transform:uppercase;font-size:.72rem;margin:0 0 14px}
+#msg,.jn.on{color:var(--on-g)}.prog i{background:linear-gradient(90deg,var(--g),#ff7a5c)}
+input#q,input#mq{border-color:var(--bd)}input#q:focus,input#mq:focus{border-color:var(--g);outline:none;box-shadow:0 0 0 3px var(--gl)}
+
+.mr,.gh{grid-template-columns:30px minmax(0,1fr) 34px 34px 84px}
+.mr .chip.s{white-space:nowrap;flex-wrap:nowrap;gap:3px;font-size:.64rem;padding:0 6px;min-height:24px}
+.stamp{white-space:nowrap;font-size:.7rem;letter-spacing:.1em}
+header h1{font-size:.82rem;letter-spacing:.06em;line-height:1.15}header small{font-size:.68rem;line-height:1.25}
 </style></head><body>
-<header id="hd"><button id="mb" aria-label="Menú" aria-expanded="false"><i></i><i></i><i></i></button>
+<header id="hd"><button id="mb" aria-label="Menú" aria-expanded="false"><i></i><i></i><i></i></button><div class="logo" aria-hidden="true">R</div>
 <h1>PokéGuía Team Rocket Edition<small>Pokédex, ataques y tipos · hack v3.0.7 (base Gen 9)</small></h1></header>
 <div id="menu" hidden></div><main id="v"></main><nav id="bar" aria-label="Pestañas abiertas"></nav>
 <script>
@@ -100,7 +125,7 @@ function buildMenu(){const it=(id,c="")=>`<button class="mi ${c}" data-o="${id}"
  `<div class="mt"><div class="mh">Ataques en la Pokédex</div>${sw("mt","Mostrar MT/MO")}${sw("tutor","Mostrar Tutor")}${sw("huevo","Mostrar Huevo")}${sw("right","Botón del menú a la derecha")}</div>`}
 MENU.addEventListener("click",e=>{const b=e.target.closest("[data-o]");if(b){MENU.hidden=true;$("#mb").setAttribute("aria-expanded","false");open(b.dataset.o)}});
 MENU.addEventListener("change",e=>{const k=e.target.dataset.c;if(!k)return;cfg[k]=e.target.checked;ls.s(k,cfg[k]);side();refreshAtk(k)});
-$("#mb").onclick=()=>{MENU.hidden=!MENU.hidden;$("#mb").setAttribute("aria-expanded",String(!MENU.hidden))};
+$("#mb").onclick=()=>{MENU.style.top=($("#hd").getBoundingClientRect().bottom+6)+"px";MENU.hidden=!MENU.hidden;$("#mb").setAttribute("aria-expanded",String(!MENU.hidden))};
 document.addEventListener("click",e=>{if(!MENU.hidden&&!e.target.closest("#menu,#mb")){MENU.hidden=true}});
 function renderBar(){BAR.innerHTML=tabs.map(id=>`<div class="tab ${id===act?"on":""}" data-id="${id}"><button class="tl">${SEC[id]}</button><button class="tx" aria-label="Cerrar ${SEC[id]}">×</button></div>`).join("");
  const a=BAR.querySelector(".on");if(a)BAR.scrollLeft=a.offsetLeft-(BAR.clientWidth-a.offsetWidth)/2}
@@ -193,7 +218,7 @@ V.addEventListener("click",e=>{if(act!=="jefes")return;const t=e.target;let b;
  if(b=t.closest(".jn")){const id=+b.closest(".jc").dataset.j,i=jdone.indexOf(id);i>=0?jdone.splice(i,1):jdone.push(id);ls.s("jdone",jdone);fillJef();return}
  if(b=t.closest(".jx")){const c=b.closest(".jc"),id=+c.dataset.j;jopen.has(id)?jopen.delete(id):jopen.add(id);const y=V.scrollTop;fillJef();V.scrollTop=y;return}
  if(t.closest(".jr")&&confirm("¿Reiniciar todo el progreso de jefes?")){jdone=[];ls.s("jdone",jdone);fillJef()}});
-function render(){renderBar();if(!act){V.innerHTML=`<div class="wel"><h2>Bienvenido</h2><p class="ey">Abre una sección desde el botón de menú.</p></div>`;return}
+function render(){renderBar();if(!act){V.innerHTML=`<div class="wel"><div class="logo big" aria-hidden="true">R</div><h2>Bienvenido, recluta</h2><p class="stamp">Confidencial · Team Rocket</p><p class="ey">Abre una sección desde el botón de menú: Pokédex, Movimientos, Jefes o Tipos.</p></div>`;return}
  V.innerHTML=act==="t-ata"?vAta():act==="t-def"?vDef():act==="t-tab"?vTab():act==="pokedex"?vDex():act==="mov"?vMov():act==="jefes"?vJef():ph(SEC[act]);if(act==="pokedex")fillDex();if(act==="mov")fillMov();if(act==="jefes")fillJef()}
 V.addEventListener("click",e=>{if(!V.contains(e.target))return;const c=e.target.closest(".chip");
  if(c&&act==="t-ata"){selA=selA===c.dataset.t?null:c.dataset.t;render()}
