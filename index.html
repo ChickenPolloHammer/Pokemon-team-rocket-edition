@@ -92,6 +92,18 @@ input#q,input#mq{border-color:var(--bd)}input#q:focus,input#mq:focus{border-colo
 .mr .chip.s{white-space:nowrap;flex-wrap:nowrap;gap:3px;font-size:.64rem;padding:0 6px;min-height:24px}
 .stamp{white-space:nowrap;font-size:.7rem;letter-spacing:.1em}
 header h1{font-size:.82rem;letter-spacing:.06em;line-height:1.15}header small{font-size:.68rem;line-height:1.25}
+
+/* Colores de eficacia: bien/mal según el bloque, con símbolo además del color */
+:root{--c-se:#1b7f3a;--c-ne:#d84315;--c-w4:#b00020;--c-w2:#d84315;--c-r2:#2e7d32;--c-r4:#00796b;--c-im:#546e7a;--on-c:#fff}
+@media(prefers-color-scheme:dark){:root{--c-se:#5ddc87;--c-ne:#ff8a50;--c-w4:#ff4d5e;--c-w2:#ff9a52;--c-r2:#6fdc8c;--c-r4:#4fe0c8;--c-im:#9fb3be;--on-c:#0b0b0e}}
+.blk[class*="k-"]{box-shadow:inset 6px 0 0 var(--c)}.blk[class*="k-"] h3{color:var(--c);font-weight:800}.blk[class*="k-"] h3::before{content:var(--s) " "}
+.k-se{--c:var(--c-se);--s:"▲"}.k-ne{--c:var(--c-ne);--s:"▼"}.k-w4{--c:var(--c-w4);--s:"▲▲"}.k-w2{--c:var(--c-w2);--s:"▲"}.k-r2{--c:var(--c-r2);--s:"▼"}.k-r4{--c:var(--c-r4);--s:"▼▼"}.k-im{--c:var(--c-im);--s:"⊘"}
+.k-w4{box-shadow:inset 10px 0 0 var(--c-w4)!important}
+#msg.m-se{background:var(--c-se);color:var(--on-c)}#msg.m-ne{background:var(--c-ne);color:var(--on-c)}#msg.m-im{background:var(--c-im);color:var(--on-c)}
+
+/* Defensa con la lógica invertida: debilidad = verde (ventaja al atacar), resistencia = rojo/naranja */
+:root{--c-w4:#0b6b2b;--c-w2:#2e8b4a;--c-r2:#d84315;--c-r4:#b00020}
+@media(prefers-color-scheme:dark){:root{--c-w4:#34d87a;--c-w2:#86e3a4;--c-r2:#ff8a50;--c-r4:#ff4d5e}}
 </style></head><body>
 <header id="hd"><button id="mb" aria-label="Menú" aria-expanded="false"><i></i><i></i><i></i></button><div class="logo" aria-hidden="true">R</div>
 <h1>PokéGuía Team Rocket Edition<small>Pokédex, ataques y tipos · hack v3.0.7 (base Gen 9)</small></h1></header>
@@ -140,7 +152,8 @@ addEventListener("pointermove",e=>{if(timer&&Math.abs(e.clientX-sx)>10&&!drag){c
 document.addEventListener("touchmove",e=>{if(drag)e.preventDefault()},{passive:false});
 function endDrag(){clearTimeout(timer);timer=null;BAR._pend=null;if(drag){tabs=[...BAR.children].map(x=>x.dataset.id);drag=null;jd=true;setTimeout(()=>jd=false,60);renderBar()}}
 addEventListener("pointerup",endDrag);addEventListener("pointercancel",endDrag);
-const mk=(h,l)=>`<div class="blk"><h3>${h}</h3><div>${l.length?l.map(t=>chip(t,"s")).join(""):'<span class="ey">Ninguno</span>'}</div></div>`;
+const KM={"Muy eficaz":"se","Poco eficaz":"ne","No afecta":"im","Muy débil":"w4","Débil":"w2","Resiste mucho":"r4","Resiste":"r2","Inmune":"im"};
+const mk=(h,l)=>`<div class="blk k-${KM[Object.keys(KM).find(x=>h.startsWith(x))]}"><h3>${h}</h3><div>${l.length?l.map(t=>chip(t,"s")).join(""):'<span class="ey">Ninguno</span>'}</div></div>`;
 function vAta(){const e=selA;let h=`<p class="ey">Elige el tipo del ataque.</p><div class="grid3">${A.map(t=>chip(t,t===e?"on":"")).join("")}</div>`;
  if(e)h+=mk("Muy eficaz contra (×2)",A.filter(d=>M[e][d]===2))+mk("Poco eficaz contra (×½)",A.filter(d=>M[e][d]===.5))+mk("No afecta a (×0)",A.filter(d=>M[e][d]===0));return h}
 function vDef(){let h=`<p class="ey">Elige 1 o 2 tipos del Pokémon (un tercero reemplaza al primero).</p><div class="grid3">${A.map(t=>chip(t,selD.includes(t)?"on":"")).join("")}</div>`;
@@ -223,7 +236,7 @@ function render(){renderBar();if(!act){V.innerHTML=`<div class="wel"><div class=
 V.addEventListener("click",e=>{if(!V.contains(e.target))return;const c=e.target.closest(".chip");
  if(c&&act==="t-ata"){selA=selA===c.dataset.t?null:c.dataset.t;render()}
  else if(c&&act==="t-def"){const t=c.dataset.t,i=selD.indexOf(t);if(i>=0)selD.splice(i,1);else{selD.push(t);if(selD.length>2)selD.shift()}render()}
- const td=e.target.closest("td");if(td){const v=M[td.dataset.a][td.dataset.d],f=v===2?"muy eficaz (×2)":v===.5?"poco eficaz (×½)":v===0?"no afecta (×0)":"daño normal (×1)";msg=`${NM[td.dataset.a]} contra ${NM[td.dataset.d]}: ${f}`;$("#msg").textContent=msg}});
+ const td=e.target.closest("td");if(td){const v=M[td.dataset.a][td.dataset.d],f=v===2?"muy eficaz (×2)":v===.5?"poco eficaz (×½)":v===0?"no afecta (×0)":"daño normal (×1)";msg=`${NM[td.dataset.a]} contra ${NM[td.dataset.d]}: ${f}`;$("#msg").textContent=msg;$("#msg").className=v===2?"m-se":v===.5?"m-ne":v===0?"m-im":""}});
 buildMenu();side();render();
 if(/^https?:$/.test(location.protocol)&&"serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});
 </script></body></html>
